@@ -1,0 +1,51 @@
+// Starter spec, read from the code and traces by portal (no AI).
+// It says what exists. Add what the code can't: domains, your names,
+// rules, and what you plan to build.
+// Conventions: https://portal.haris-d21.workers.dev/skills/portal-architecture/SKILL.md
+model {
+  system = domain 'todo-nodejs-mongo' {
+    web = service 'web' {  // infra/main.bicep:48
+      technology 'TypeScript'
+      metadata {
+        code 'src/web/**'
+        resource 'web'
+      }
+    }
+    api = service 'api' {  // infra/main.bicep:62
+      technology 'TypeScript · Express · REST'
+      metadata {
+        code 'src/api/**'
+        resource 'api'
+      }
+    }
+    cosmos = datastore 'cosmos' {  // infra/main.bicep:117
+      technology 'Cosmos DB'
+      metadata {
+        resource 'cosmos'
+      }
+    }
+    apim = infra 'apim' {  // infra/main.bicep:174
+      technology 'API Management (gateway) · only if useAPIM'
+      metadata {
+        resource 'apim'
+      }
+    }
+  }
+
+  api -> cosmos  // reads or writes? say which: -[reads]-> or -[writes]->
+  web -[request]-> api
+}
+
+specification {
+  element domain
+  element service
+  element event
+  element datastore
+  element infra
+  element component
+  relationship request
+  relationship publishes
+  relationship consumes
+  relationship reads
+  relationship writes
+}
