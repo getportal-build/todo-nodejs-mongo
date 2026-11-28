@@ -99,16 +99,10 @@ model {
         resource 'cosmos'
       }
     }
-    apim_deployment = service 'apim-deployment' {  // infra/main.bicep:182
-      technology 'API Management'
+    apim = infra 'apim' {  // infra/main.bicep:182
+      technology 'API Management (gateway) · only if useAPIM'
       metadata {
-        resource 'apim-deployment'
-      }
-    }
-    MongoDB = datastore 'MongoDB' {  // src/api/package.json:35
-      technology 'MongoDB'
-      metadata {
-        resource 'MongoDB'
+        resource 'apim'
       }
     }
   }
@@ -119,7 +113,6 @@ model {
   src -> routes
   models -> config
   routes -> models
-  api -> MongoDB  // reads or writes? say which: -[reads]-> or -[writes]->
   src_2 -> components
   src_2 -> layout
   src_2 -> models_2
@@ -145,6 +138,7 @@ model {
   reducers -> models_2
   services -> config_2
   services -> models_2
+  config_2 -[request]-> api
 }
 
 specification {
