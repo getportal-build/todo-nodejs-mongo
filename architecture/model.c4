@@ -1,0 +1,170 @@
+// Starter spec, read from the code and traces by portal (no AI).
+// It says what exists. Add what the code can't: domains, your names,
+// rules, and what you plan to build.
+// Conventions: https://portal.haris-d21.workers.dev/skills/portal-architecture/SKILL.md
+model {
+  system = domain 'todo-nodejs-mongo' {
+    api = service 'api' {  // infra/app/api-appservice-avm.bicep:23
+      technology 'TypeScript · Express · REST'
+      metadata {
+        code 'src/api/**'
+        resource 'api'
+      }
+    }
+    api_2 = service 'api' {  // infra/app/api.bicep:14
+      technology 'Azure App Service'
+      metadata {
+        resource 'api'
+      }
+    }
+    apimService = infra 'apimService' {  // infra/app/apim-api.bicep:97
+      technology 'API Management (gateway)'
+      metadata {
+        resource 'apimService'
+      }
+    }
+    cosmos = datastore 'cosmos' {  // infra/app/db-avm.bicep:49
+      technology 'Cosmos DB'
+      metadata {
+        resource 'cosmos'
+      }
+    }
+    web = service 'web' {  // infra/app/web-appservice-avm.bicep:11
+      technology 'TypeScript'
+      metadata {
+        code 'src/web/**'
+        resource 'web'
+      }
+    }
+    web_2 = service 'web' {  // infra/app/web.bicep:9
+      technology 'Azure App Service'
+      metadata {
+        resource 'web'
+      }
+    }
+    cosmos_2 = datastore 'cosmos' {  // infra/core/database/cosmos/mongo/cosmos-mongo-account.bicep:9
+      technology 'Cosmos DB'
+      metadata {
+        resource 'cosmos'
+      }
+    }
+    cosmos_3 = datastore 'cosmos' {  // infra/core/database/cosmos/sql/cosmos-sql-account.bicep:8
+      technology 'Cosmos DB'
+      metadata {
+        resource 'cosmos'
+      }
+    }
+    cosmos_4 = datastore 'cosmos' {  // infra/core/database/cosmos/sql/cosmos-sql-role-assign.bicep:17
+      technology 'Cosmos DB'
+      metadata {
+        resource 'cosmos'
+      }
+    }
+    cosmos_5 = datastore 'cosmos' {  // infra/core/database/cosmos/sql/cosmos-sql-role-def.bicep:26
+      technology 'Cosmos DB'
+      metadata {
+        resource 'cosmos'
+      }
+    }
+    allow_all_IPs = datastore 'allow-all-IPs' {  // infra/core/database/mysql/flexibleserver.bicep:20
+      technology 'Azure Database for MySQL'
+      metadata {
+        resource 'allow-all-IPs'
+      }
+    }
+    allow_all_IPs_2 = datastore 'allow-all-IPs' {  // infra/core/database/postgresql/flexibleserver.bicep:20
+      technology 'Azure Database for PostgreSQL'
+      metadata {
+        resource 'allow-all-IPs'
+      }
+    }
+    Azure_Services = datastore 'Azure Services' {  // infra/core/database/sqlserver/sqlserver.bicep:17
+      technology 'Azure SQL'
+      metadata {
+        resource 'Azure Services'
+      }
+    }
+    apimService_2 = infra 'apimService' {  // infra/core/gateway/apim.bicep:30
+      technology 'API Management (gateway)'
+      metadata {
+        resource 'apimService'
+      }
+    }
+    aksCluster = infra 'aksCluster' {  // infra/core/host/aks-agent-pool.bicep:10
+      technology 'AKS'
+      metadata {
+        resource 'aksCluster'
+      }
+    }
+    Base = infra 'Base' {  // infra/core/host/aks-managed-cluster.bicep:65
+      technology 'AKS'
+      metadata {
+        resource 'Base'
+      }
+    }
+    appService = service 'appService' {  // infra/core/host/appservice-appsettings.bicep:9
+      technology 'Azure App Service'
+      metadata {
+        resource 'appService'
+      }
+    }
+    existingApp = service 'existingApp' {  // infra/core/host/container-app-upsert.bicep:74
+      technology 'Azure Container Apps · only if exists'
+      metadata {
+        resource 'existingApp'
+      }
+    }
+    app = service 'app' {  // infra/core/host/container-app.bicep:96
+      technology 'Azure Container Apps'
+      metadata {
+        resource 'app'
+      }
+    }
+    containerAppsEnvironment = infra 'containerAppsEnvironment' {  // infra/core/host/container-app.bicep:160
+      technology 'Container Apps environment'
+      metadata {
+        resource 'containerAppsEnvironment'
+      }
+    }
+    containerAppsEnvironment_2 = infra 'containerAppsEnvironment' {  // infra/core/host/container-apps-environment.bicep:15
+      technology 'Container Apps environment'
+      metadata {
+        resource 'containerAppsEnvironment'
+      }
+    }
+    storage = datastore 'storage' {  // infra/core/host/functions.bicep:94
+      technology 'Azure Storage'
+      metadata {
+        resource 'storage'
+      }
+    }
+    web_3 = service 'web' {  // infra/core/host/staticwebapp.bicep:11
+      technology 'Azure Static Web Apps'
+      metadata {
+        resource 'web'
+      }
+    }
+    MongoDB = datastore 'MongoDB' {  // src/api/package.json:34
+      technology 'MongoDB'
+      metadata {
+        resource 'MongoDB'
+      }
+    }
+  }
+
+  api -> MongoDB  // reads or writes? say which: -[reads]-> or -[writes]->
+}
+
+specification {
+  element domain
+  element service
+  element event
+  element datastore
+  element infra
+  element component
+  relationship request
+  relationship publishes
+  relationship consumes
+  relationship reads
+  relationship writes
+}
