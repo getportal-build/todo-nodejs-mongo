@@ -18,13 +18,13 @@ model {
         resource 'api'
       }
     }
-    cosmos = datastore 'cosmos' {  // infra/main.bicep:117
+    cosmos = datastore 'cosmos' {  // infra/main.bicep:116
       technology 'Cosmos DB'
       metadata {
         resource 'cosmos'
       }
     }
-    apim = infra 'apim' {  // infra/main.bicep:174
+    apim = infra 'apim' {  // infra/main.bicep:182
       technology 'API Management (gateway) · only if useAPIM'
       metadata {
         resource 'apim'
