@@ -1,0 +1,162 @@
+// Starter spec, read from the code and traces by portal (no AI).
+// It says what exists. Add what the code can't: domains, your names,
+// rules, and what you plan to build.
+// Conventions: https://portal.haris-d21.workers.dev/skills/portal-architecture/SKILL.md
+model {
+  system = domain 'todo-nodejs-mongo' {
+    web = service 'web' {  // infra/main.bicep:48
+      technology 'TypeScript'
+      metadata {
+        code 'src/web/**'
+        resource 'web'
+      }
+      src_2 = component 'src' {
+        metadata {
+          code 'src/web/src/*'
+        }
+      }
+      types = component '@types' {
+        metadata {
+          code 'src/web/src/@types/**'
+        }
+      }
+      actions = component 'actions' {
+        metadata {
+          code 'src/web/src/actions/**'
+        }
+      }
+      components = component 'components' {
+        metadata {
+          code 'src/web/src/components/**'
+        }
+      }
+      config_2 = component 'config' {
+        metadata {
+          code 'src/web/src/config/**'
+        }
+      }
+      layout = component 'layout' {
+        metadata {
+          code 'src/web/src/layout/**'
+        }
+      }
+      models_2 = component 'models' {
+        metadata {
+          code 'src/web/src/models/**'
+        }
+      }
+      pages = component 'pages' {
+        metadata {
+          code 'src/web/src/pages/**'
+        }
+      }
+      reducers = component 'reducers' {
+        metadata {
+          code 'src/web/src/reducers/**'
+        }
+      }
+      services = component 'services' {
+        metadata {
+          code 'src/web/src/services/**'
+        }
+      }
+      ux = component 'ux' {
+        metadata {
+          code 'src/web/src/ux/**'
+        }
+      }
+    }
+    api = service 'api' {  // infra/main.bicep:62
+      technology 'TypeScript · Express · REST'
+      metadata {
+        code 'src/api/**'
+        resource 'api'
+      }
+      src = component 'src' {
+        metadata {
+          code 'src/api/src/*'
+        }
+      }
+      config = component 'config' {
+        metadata {
+          code 'src/api/src/config/**'
+        }
+      }
+      models = component 'models' {
+        metadata {
+          code 'src/api/src/models/**'
+        }
+      }
+      routes = component 'routes' {
+        metadata {
+          code 'src/api/src/routes/**'
+        }
+      }
+    }
+    cosmos = datastore 'cosmos' {  // infra/main.bicep:116
+      technology 'Cosmos DB'
+      metadata {
+        resource 'cosmos'
+      }
+    }
+    apim_deployment = service 'apim-deployment' {  // infra/main.bicep:182
+      technology 'API Management'
+      metadata {
+        resource 'apim-deployment'
+      }
+    }
+    MongoDB = datastore 'MongoDB' {  // src/api/package.json:35
+      technology 'MongoDB'
+      metadata {
+        resource 'MongoDB'
+      }
+    }
+  }
+
+  api -> cosmos  // reads or writes? say which: -[reads]-> or -[writes]->
+  src -> config
+  src -> models
+  src -> routes
+  models -> config
+  routes -> models
+  api -> MongoDB  // reads or writes? say which: -[reads]-> or -[writes]->
+  src_2 -> components
+  src_2 -> layout
+  src_2 -> models_2
+  src_2 -> reducers
+  src_2 -> ux
+  actions -> config_2
+  actions -> models_2
+  actions -> services
+  components -> models_2
+  components -> services
+  components -> ux
+  layout -> actions
+  layout -> components
+  layout -> models_2
+  layout -> pages
+  layout -> ux
+  models_2 -> actions
+  pages -> actions
+  pages -> components
+  pages -> models_2
+  pages -> ux
+  reducers -> actions
+  reducers -> models_2
+  services -> config_2
+  services -> models_2
+}
+
+specification {
+  element domain
+  element service
+  element event
+  element datastore
+  element infra
+  element component
+  relationship request
+  relationship publishes
+  relationship consumes
+  relationship reads
+  relationship writes
+}
